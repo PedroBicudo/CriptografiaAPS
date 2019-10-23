@@ -7,13 +7,13 @@ Trabalho de conclusão de semestre da UNIP.
 - One Time Pad ( Custom e ASCII ).
 
 ## Manipulando as criptografias via linha de comando:
-Sintaxe básica:
+### Sintaxe básica:
 ```
 python aps.py (-e|-d) (-txt|-file) cript args
 ```
 
 ## Criptografando e descriptografando mensagens:
-Cifra de cesar:
+### Cifra de cesar:
 ```
 # Sintaxe
 python aps.py (-e|-d) (-txt|-file) cript rot
@@ -27,7 +27,7 @@ python aps.py -d -txt raa caesar 12
 python aps.py -d -file raa.txt caesar 12
 ```
 
-RSA:
+### RSA:
 ```
 # Gerar chave
 python aps.py -e -txt teste rsaGk
@@ -44,7 +44,7 @@ python aps.py -d -txt  0xf481b:0x9ccd9:0x9ccd9 rsa 1624391 68467
 python aps.py -d -file foo.txt rsa 1624391 68467
 ```
 
-ASCIIOTP:
+### ASCII OTP:
 ```
 Sintaxe:
 python aps.py (-e|-d) (-txt|-file) asciiotp key
@@ -60,7 +60,7 @@ python aps.py -d -file foo.txt asciiotp wpr
 $RANDOM$ Gera uma chave randomica do mesmo tamanho do texto
 ```
 
-CUSTOMOTP:
+### CUSTOM OTP:
 ```
 Sintaxe:
 python aps.py (-e|-d) (-txt|-file) otp key
