@@ -1,6 +1,5 @@
 """Direcionar os parametros argparse para as respectivas criptografias."""
-# Importando modulos usados
-from string import ascii_letters, punctuation, hexdigits
+from string import ascii_letters as characaters
 from random import choices
 from RSA import (
     encript as rsa_enc, 
@@ -48,32 +47,70 @@ criptografias = {
     }
 }
 
+
 def getRandomKey(msg):
-    # Caracter especial ’ nao esta presente em punctuation
-    characaters = ascii_letters
+    """Gerar chave aleatoria.
+    
+    Arguments:
+        msg {str} -- Mensagem
+    
+    Returns:
+        str -- Chave aleatoria de acordo com o tamanho da mensagem.
+
+    """
     if all('0x' in value for value in msg.split(':')):
         msg = msg.split(':')
     return "".join(choices(characaters, k=len(msg)))
 
+
 def removerArgs(kwargs, name):
+    """Apagar argumentos do dicionario.
+    
+    Arguments:
+        kwargs {dict} -- Dicionario com os parametros.
+        name {str} -- Indice a ser apagado.
+    
+    Returns:
+        dict -- kwargs
+
+    """
     return kwargs.pop(name)
 
+
 def getText(kwargs):
-    # Texto
+    """Verificar qual o tipo de entrada.
+    
+    Arguments:
+        kwargs {dict} -- Dicionario com os parametros.
+    
+    Returns:
+        dict -- Kwargs modificado.
+
+    """
     if kwargs.get('file') != None:
         kwargs['txt'] = kwargs['file'].read()
     
     return removerArgs(kwargs, 'file')
 
 def chaveExiste(kwargs):
-    # Chave, se existir
+    """Verificar se a chave e aleatoria.
+    
+    Arguments:
+        kwargs {dict} -- Dicionarios com os parametros.
+    
+    Returns:
+        dict -- Kwargs
+
+    """
     if kwargs.get('key'):
         if kwargs.get('key') == "$RANDOM$":
             kwargs['key'] = getRandomKey(kwargs['txt'])
 
     return kwargs
 
+
 def manipularArgumentos(**kwargs):
+    """Manipular argumentos e direcionar para a respectiva funcao."""
     getText(kwargs)
     chaveExiste(kwargs)
     if kwargs.get('generateKeys') is True:
@@ -89,11 +126,9 @@ def manipularArgumentos(**kwargs):
         cript = cript['enc']
     else:
         cript = cript['dec']
-
+    
     removerArgs(kwargs, 'encript')
     removerArgs(kwargs, 'decript')
-
-    # print(f"Chave: {kwargs['key']}\n")
 
     args = list(filter(lambda x: x != None, list(kwargs.values())))
     print(f"Text: {cript(*args)}")
