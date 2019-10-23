@@ -13,7 +13,7 @@ python aps.py (-e|-d) (-txt|-file) cript args
 ```
 
 ## Criptografando e descriptografando mensagens:
-### Cifra de cesar:
+### Cifra de César:
 ```
 # Sintaxe
 python aps.py (-e|-d) (-txt|-file) cript rot
