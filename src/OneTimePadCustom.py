@@ -1,6 +1,6 @@
 """Criptografia One Time Pad customizada."""
 from types import BuiltinFunctionType
-from string import ascii_letters, punctuation, whitespace
+from string import ascii_letters, punctuation
 from operator import add, sub
 
 characters = ascii_letters + punctuation + '’ '
