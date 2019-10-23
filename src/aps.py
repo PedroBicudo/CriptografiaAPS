@@ -104,7 +104,10 @@ custom_otp = cripts.add_parser(
 
 custom_otp.add_argument(
     "key",
-    help="Chave para criptografar/descriptografar",
+    help="""
+        Chave para criptografar/descriptografar 
+        [digite $RANDOM$ para chaves aleatorias].
+        """,
     type=str
     )
 
@@ -122,11 +125,14 @@ ascii_otp = cripts.add_parser(
 
 ascii_otp.add_argument(
     "key",
-    help="""Chave para criptografar/descriptografar 
+    help="""
+        Chave para criptografar/descriptografar 
         [digite $RANDOM$ para chaves aleatorias].
         """,
     type=str
     )
 
-args = criptmng.parse_args()
-manipularArgumentos(**args.__dict__)
+
+if __name__ == "__main__":
+    args = criptmng.parse_args()
+    manipularArgumentos(**args.__dict__)
