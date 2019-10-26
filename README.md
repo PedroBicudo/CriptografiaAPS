@@ -63,7 +63,7 @@ $RANDOM$ Gera uma chave randomica do mesmo tamanho do texto
 ### CUSTOM OTP:
 ```
 Sintaxe:
-python aps.py [-h] (-txt TXT | -file FILE) (--encript | --decript)
+python aps.py [-h] (-txt TXT | -file FILE) (--encript | --decript) cript args
 
 # Encriptando:
 python aps.py -e -txt foo otp $RANDOM$
