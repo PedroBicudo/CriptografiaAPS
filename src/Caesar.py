@@ -100,8 +100,8 @@ if __name__ == "__main__":
 
     # Exemplo com alfabeto lowercase
     new_letter = encript('teste', 12)
-    org_letter = decript(new_letter, 12)
     print(new_letter)
+    org_letter = decript(new_letter, 12)
     print(org_letter, end='\n\n')
 
     # Exemplo com alfabeto UpperCase
