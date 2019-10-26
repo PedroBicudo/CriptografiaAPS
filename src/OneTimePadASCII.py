@@ -52,7 +52,7 @@ def encrypt(msg, key):
 
     """
     result = __action__(msg, key)
-    print(f"Chave: {key}\n")
+    # print(f"Chave: {key}\n")
     return ':'.join(map(hex, result))
 
 
@@ -71,14 +71,20 @@ def decrypt(hex_msg, key):
     return ''.join(map(chr, __action__(hex_msg, key)))
 
 if __name__ == "__main__":
+    from itertools import product
+    from string import ascii_lowercase
     # Encriptacao
-    enc = encrypt('batata', 'abcdef')
+    enc = encrypt('teste', 'abcde')
 
     # Decriptacao
-    dec = decrypt(enc, 'abcdef')
+    dec = decrypt(enc, 'abcde')
+
+    # Tentantiva 
+    t = decrypt(enc, 'yncda')
 
     # Conclusao ASCII One Time Pad
     print("++===========++ ASCIIOneTimePad ++===========++")
-    print("Chave verdadeira: testete")
+    print("Chave verdadeira: abcde")
     print(f"Encriptacao: {enc}\nDesencriptacao: {dec}")
+    print(f"Tentativa: {t}")
     print("++===========++++===========++++=============++")
