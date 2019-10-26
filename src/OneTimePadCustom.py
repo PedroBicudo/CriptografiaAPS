@@ -74,7 +74,7 @@ def getWord(msg, key, operator, alphabet):
         lpos = alphabet.index(letter)
         kpos = alphabet.index(key[index])
         result += getLetter(lpos, kpos, operator, alphabet)
-    return ''.join(result)
+    return result
 
 
 def encrypt(msg, key, alphabet=characters):
