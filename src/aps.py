@@ -7,9 +7,10 @@ criptmng = argparse.ArgumentParser(
     description="Criptografias desenvolvidas pelo grupo da APS.",
 )
 
+requiredArgs = criptmng.add_argument_group("Parametros Obrigatorios")
 # Argumentos para entrada de texto
 # Apenas o texto ou arquivo serao selecionados.
-input_arg = criptmng.add_mutually_exclusive_group(required=True)
+input_arg = requiredArgs.add_mutually_exclusive_group(required=True)
 input_arg.add_argument(
     "-txt",
     help="Texto a ser criptografado.",
@@ -22,7 +23,7 @@ input_arg.add_argument(
 )
 
 # Acoes para a criptografia
-action_crip = criptmng.add_mutually_exclusive_group(required=True)
+action_crip = requiredArgs.add_mutually_exclusive_group(required=True)
 action_crip.add_argument(
     "--encript", "-e",
     help="Encriptar a mensagem.",
