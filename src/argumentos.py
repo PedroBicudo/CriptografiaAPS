@@ -19,30 +19,31 @@ from Caesar import (
     decript as caesar_dec
 )
 import sys
+import _io
 
 criptografias = {
     "caesar": {
         "action": {
-            "enc": caesar_enc,
-            "dec": caesar_dec
+            True: caesar_enc,
+            False: caesar_dec
         }
     },
     "rsa": {
         "action": {
-            "enc": rsa_enc,
-            "dec": rsa_dec
+            True: rsa_enc,
+            False: rsa_dec
         }
     },
     "otp": {
         "action": {
-            "enc": customotp_enc,
-            "dec": customotp_dec
+            True: customotp_enc,
+            False: customotp_dec
         }
     },
     "asciiotp": {
         "action": {
-            "enc": asciiotp_enc,
-            "dec": asciiotp_dec
+            True: asciiotp_enc,
+            False: asciiotp_dec
         }
     }
 }
@@ -77,26 +78,11 @@ def removerArgs(kwargs, name):
     return kwargs.pop(name)
 
 
-def getText(kwargs):
-    """Verificar qual o tipo de entrada.
-    
-    Arguments:
-        kwargs {dict} -- Dicionario com os parametros.
-    
-    Returns:
-        dict -- Kwargs modificado.
-
-    """
-    if kwargs.get('file') != None:
-        kwargs['txt'] = kwargs['file'].read()
-    
-    return removerArgs(kwargs, 'file')
-
-def chaveExiste(kwargs):
+def chaveExiste(kwargs): 
     """Verificar se a chave e aleatoria.
     
     Arguments:
-        kwargs {dict} -- Dicionarios com os parametros.
+        kwargs {dict} -- KeyWord Arguments
     
     Returns:
         dict -- Kwargs
@@ -104,31 +90,87 @@ def chaveExiste(kwargs):
     """
     if kwargs.get('key'):
         if kwargs.get('key') == "$RANDOM$":
-            kwargs['key'] = getRandomKey(kwargs['txt'])
+            kwargs['key'] = getRandomKey(kwargs['input'])
+            print(f"Chave: {kwargs['key']}")
 
     return kwargs
 
+def output(msg, output: [None, _io.TextIOWrapper]):
+    """Formato de saida da mensagem criptografada/descriptografada.
+
+    Description:
+        Se o tipo de saida for _io.TextIOWrapper ele escreve no
+        arquivo, caso contrario, simplesmente imprime na tela.
+    
+    Arguments:
+        msg {str} -- Mensagem.
+        output {[None, _io.TextIOWrapper]} -- Tipo de saida.
+    """
+    if output is not None:
+        output.write(msg)
+        output.close()
+        sys.exit(0)
+    
+    print(f"Text: {msg}")
+    
+
+def inputType(kwargs):
+    """Define o tipo de entrada.
+
+    Description:
+        Buscar ver qual o tipo de entrada, se for arquivo
+        sera adicionado o metodo '.read()' e retornado.
+    
+    Arguments:
+        kwargs {dict} -- KeyWord Arguments
+    
+    Returns:
+        dict -- KeyWord Arguments
+
+    """
+    if isinstance(kwargs['input'], _io.TextIOWrapper):
+        kwargs['input'] = kwargs['input'].read()
+    return kwargs
+
+
+def criptType(kwargs):
+    """Obter o tipo de criptografia.
+    
+    Arguments:
+        kwargs {dict} -- KeyWord Arguments.
+    
+    Returns:
+        function -- Funcao representando a acao da criptografia.
+
+    """
+    cript = criptografias[kwargs['cript']]['action']
+    return cript[kwargs['action']]
+
 
 def manipularArgumentos(**kwargs):
-    """Manipular argumentos e direcionar para a respectiva funcao."""
-    getText(kwargs)
+    """Manipular argumentos inseridos e direcionar para o usuario."""
+    # Tipo de entrada
+    inputType(kwargs)
+
     chaveExiste(kwargs)
-    if kwargs.get('generateKeys') is True:
+    if kwargs.get('generateKeys', False):
         keys = chaves()
         print("Chaves publicas:", keys[0])
         print("Chave privada:", keys[1])
         sys.exit(0)
     
     # Acao a ser tomada
-    cript = criptografias[kwargs['cript']]['action']
-    removerArgs(kwargs, 'cript')
-    if kwargs['encript'] is True:
-        cript = cript['enc']
-    else:
-        cript = cript['dec']
-    
-    removerArgs(kwargs, 'encript')
-    removerArgs(kwargs, 'decript')
+    cript = criptType(kwargs)
+    kwargs.pop('action')
+    kwargs.pop('cript')
 
+
+    # Tipo de saida
+    saida = None if not kwargs.get('output', False) else kwargs['output']
+    if kwargs.get('output'):
+        removerArgs(kwargs, 'output')
+    
+    # Eliminando valores None
     args = list(filter(lambda x: x != None, list(kwargs.values())))
-    print(f"Text: {cript(*args)}")
+
+    output(cript(*args), saida)
