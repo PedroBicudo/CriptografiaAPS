@@ -70,7 +70,6 @@ def encript(msg, rot, alphabet=ascii_lowercase):
         str -- Mensagem criptografada.
 
     """
-    print(f"Chave: {rot}\n")
     return __caesar__(msg, rot, add, alphabet)
 
 
