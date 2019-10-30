@@ -89,7 +89,6 @@ def encrypt(msg, key, alphabet=characters):
         str -- Texto encriptado.
 
     """
-    print(f"Chave: {key}\n")
     return getWord(msg, key, add, alphabet)
 
 

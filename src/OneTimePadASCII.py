@@ -52,7 +52,6 @@ def encrypt(msg, key):
 
     """
     result = __action__(msg, key)
-    # print(f"Chave: {key}\n")
     return ':'.join(map(hex, result))
 
 
