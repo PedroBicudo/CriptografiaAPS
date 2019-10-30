@@ -13,14 +13,24 @@ requiredArgs = criptmng.add_argument_group("Parametros Obrigatorios")
 input_arg = requiredArgs.add_mutually_exclusive_group(required=True)
 input_arg.add_argument(
     "-txt",
-    help="Texto a ser criptografado.",
-    type=str
+    help="Texto a ser criptografado/descriptografado.",
+    type=str,
+    dest="input"
 )
 input_arg.add_argument(
-    "-file",
-    help="Arquivo a ser criptografado.",
-    type=argparse.FileType('r', encoding='utf-8')
+    "-iF",
+    help="Arquivo a ser criptografado/descriptografado.",
+    type=argparse.FileType('r', encoding='utf-8'),
+    dest="input"
 )
+
+criptmng.add_argument(
+    "-oF",
+    help="Arquivo de saida.",
+    type=argparse.FileType('w', encoding="utf-8"),
+    dest="output"
+    )
+
 
 # Acoes para a criptografia
 action_crip = requiredArgs.add_mutually_exclusive_group(required=True)
@@ -28,14 +38,14 @@ action_crip.add_argument(
     "--encript", "-e",
     help="Encriptar a mensagem.",
     action="store_true",
-    default="store_false"
+    dest='action'
     )
 
 action_crip.add_argument(
     "--decript", "-d",
     help="Desencriptar a mensagem.",
-    action="store_true",
-    default="store_false"
+    action="store_false",
+    dest='action'
     )
 
 
