@@ -64,20 +64,6 @@ def getRandomKey(msg):
     return "".join(choices(characaters, k=len(msg)))
 
 
-def removerArgs(kwargs, name):
-    """Apagar argumentos do dicionario.
-    
-    Arguments:
-        kwargs {dict} -- Dicionario com os parametros.
-        name {str} -- Indice a ser apagado.
-    
-    Returns:
-        dict -- kwargs
-
-    """
-    return kwargs.pop(name)
-
-
 def chaveExiste(kwargs): 
     """Verificar se a chave e aleatoria.
     
@@ -168,7 +154,7 @@ def manipularArgumentos(**kwargs):
     # Tipo de saida
     saida = None if not kwargs.get('output', False) else kwargs['output']
     if kwargs.get('output'):
-        removerArgs(kwargs, 'output')
+        kwargs.pop('output')
     
     # Eliminando valores None
     args = list(filter(lambda x: x != None, list(kwargs.values())))
