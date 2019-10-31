@@ -65,7 +65,7 @@ def getWord(msg, key, operator, alphabet):
         )
     size_msg = len(list(set(msg) - set(alphabet)))
     size_key = len(list(set(msg) - set(alphabet)))
-    assert len(key) == len(msg), "'key' e 'msg' devem ter o mesmo tamanho."
+    assert len(key) >= len(msg), "'key' e 'msg' devem ter o mesmo tamanho."
     assert  size_msg == 0, f"'msg' deve ter todos os caracteres em {alphabet}."
     assert  size_key == 0, f"'key' deve ter todos os caracteres em {alphabet}."
     

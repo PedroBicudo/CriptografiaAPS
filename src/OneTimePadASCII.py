@@ -30,7 +30,7 @@ def __action__(ord_msg, ord_key):
         list -- Resultado ordenado da operacao.
 
     """
-    size = len(ord_key) == len(ord_msg)
+    size = len(ord_key) >= len(ord_msg)
     assert size, "'key' e 'msg' devem ter o mesmo tamanho."
     result = []
     for index, letter in enumerate(ord_msg):
