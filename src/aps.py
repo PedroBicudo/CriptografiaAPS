@@ -60,7 +60,7 @@ cripts = criptmng.add_subparsers(
 # Cifra de cesar
 caesar = cripts.add_parser(
     "caesar", 
-    help="Cifra de cesar"
+    help="Cifra de cesar."
     )
 
 caesar.add_argument(
@@ -108,12 +108,12 @@ rsa.add_argument(
     )
 
 # Custom OTP
-custom_otp = cripts.add_parser(
-    "otp", 
-    help="Criptografia One Time Pad com alfabeto padrao."
+vigenere = cripts.add_parser(
+    "vigenere", 
+    help="Cifra de Vigenere com alfabeto padrao."
     )
 
-custom_otp.add_argument(
+vigenere.add_argument(
     "key",
     help="""
         Chave para criptografar/descriptografar 
@@ -122,7 +122,7 @@ custom_otp.add_argument(
     type=str
     )
 
-custom_otp.add_argument(
+vigenere.add_argument(
     "-alphabet", 
     help="Alfabeto customizado.",
     type=str
@@ -130,8 +130,8 @@ custom_otp.add_argument(
 
 # ASCII OTP
 ascii_otp = cripts.add_parser(
-    "asciiotp", 
-    help="Criptografia One Time Pad via tabela ascii."
+    "otp", 
+    help="Criptografia One Time Pad."
     )
 
 ascii_otp.add_argument(

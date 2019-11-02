@@ -6,13 +6,13 @@ from RSA import (
     decript as rsa_dec,
     chaves
 )
-from OneTimePadASCII import (
-    encrypt as asciiotp_enc, 
-    decrypt as asciiotp_dec
+from OneTimePad import (
+    encrypt as otp_enc, 
+    decrypt as otp_dec
 )
-from OneTimePadCustom import (
-    encrypt as customotp_enc,
-    decrypt as customotp_dec
+from VigenereCipher import (
+    encrypt as vig_enc,
+    decrypt as vig_dec
 )
 from Caesar import (
     encript as caesar_enc,
@@ -34,16 +34,16 @@ criptografias = {
             False: rsa_dec
         }
     },
-    "otp": {
+    "vigenere": {
         "action": {
-            True: customotp_enc,
-            False: customotp_dec
+            True: vig_enc,
+            False: vig_dec
         }
     },
-    "asciiotp": {
+    "otp": {
         "action": {
-            True: asciiotp_enc,
-            False: asciiotp_dec
+            True: otp_enc,
+            False: otp_dec
         }
     }
 }
