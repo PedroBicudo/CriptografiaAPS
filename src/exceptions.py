@@ -1,5 +1,4 @@
 """Arquivos contendo as exceções do projeto."""
-from typing import NamedTuple
 
 class CriptException(BaseException):
     """Excecao base para o projeto."""
