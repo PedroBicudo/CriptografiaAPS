@@ -1,40 +1,45 @@
 """Criptografia OneTimePad via operacao XOR."""
+from exceptions import SizeStringError
 
 
-def __hexToChr__(hex_msg):
-    r"""Realizar conversao da mensagem em hexadecimal para Caractere.
+def hexToChr(hex_msg, sep=':'):
+    """Realizar conversao da mensagem em hexadecimal para Caractere.
     
     Arguments:
-        hex_msg {str} -- Mensagem em hexadecimal
-                exemplo:
-                    Entrada:
-                        0x74:0x65:0x73:0x74:0x65
-                    Saida:
-                        ['t', 'e', 's', 't', 'e']
+        hex_msg {str} -- Mensagem em hexadecimal (ex: '0x44:0x55:0x66')
+        sep {str} -- Delimitador de hexadecimal {default: ':'}.
 
     Returns:
-        list -- Lista de valores pertencentes aos caracteres ASCII.
+        list -- Mensagem traduzida para os caracteres da tabela ASCII.
 
     """
-    return list(map(lambda x: chr(int(x, base=16)), hex_msg.split(':')))
+    if not isinstance(hex_msg, str) or not isinstance(sep, str):
+        raise TypeError(f"O parametro 'hex_msg' e 'sep' devem ser string.")
+    
+    dec_msg = list(map(lambda hex_v: int(hex_v, base=16), hex_msg.split(sep)))
+    return list(map(lambda dec_v: chr(dec_v), dec_msg))
 
 
-def __action__(ord_msg, ord_key):
+def action(msg, key):
     """Realizar a operacao XOR, responsavel pela criptografia.
     
     Arguments:
-        ord_msg {list[int]} -- Mensagem com caracteres ordenados.
-        ord_key {list[int]} -- Chave com caracteres ordenados.
+        msg {list} -- Mensagem a ser criptografada.
+        key {list} -- Chave de tamanho igual ou superior.
     
     Returns:
         list -- Resultado ordenado da operacao.
 
     """
-    size = len(ord_key) >= len(ord_msg)
-    assert size, "'key' e 'msg' devem ter o mesmo tamanho."
+    if not isinstance(msg, str) or not isinstance(key, str):
+        raise TypeError(f"'msg' e 'key' devem ser do tipo string.")
+    
+    if len(key) < len(msg):
+        raise SizeStringError("'key' deve ter tamanho maior ou igual a 'msg'.")
+
     result = []
-    for index, letter in enumerate(ord_msg):
-        result.append(ord(letter) ^ ord(ord_key[index]))
+    for index, letter in enumerate(msg):
+        result.append(ord(letter) ^ ord(key[index]))
     return result
     
 
@@ -46,12 +51,10 @@ def encrypt(msg, key):
         key {str} -- Chave de encriptacao.
     
     Returns:
-        str[hex] -- String com formato hexadecimal
-            exemplo de saida:
-                0x16:0x4:0x7:0x15:0x11
+        str -- String com formato hexadecimal (ex: '0xAA:0xBB')
 
     """
-    result = __action__(msg, key)
+    result = action(msg, key)
     return ':'.join(map(hex, result))
 
 
@@ -59,31 +62,12 @@ def decrypt(hex_msg, key):
     """Desencriptar a mensagem OTP.
 
     Arguments:
-        hex_msg {str[hex]} -- Mensagem string em formato hexadecimal.
+        hex_msg {str} -- Mensagem em formato hexadecimal. (ex: '0xAA:0xBB')
         key {str} -- Chave de desencriptacao.
     
     Returns:
         str -- Mensagem descriptografada.
 
     """
-    hex_msg = __hexToChr__(hex_msg)
-    return ''.join(map(chr, __action__(hex_msg, key)))
-
-if __name__ == "__main__":
-    from itertools import product
-    from string import ascii_lowercase
-    # Encriptacao
-    enc = encrypt('teste', 'abcde')
-
-    # Decriptacao
-    dec = decrypt(enc, 'abcde')
-
-    # Tentantiva 
-    t = decrypt(enc, 'yncda')
-
-    # Conclusao ASCII One Time Pad
-    print("++===========++ ASCIIOneTimePad ++===========++")
-    print("Chave verdadeira: abcde")
-    print(f"Encriptacao: {enc}\nDesencriptacao: {dec}")
-    print(f"Tentativa: {t}")
-    print("++===========++++===========++++=============++")
+    hex_msg = hexToChr(hex_msg)
+    return ''.join(map(chr, action(hex_msg, key)))
