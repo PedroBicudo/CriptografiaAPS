@@ -82,13 +82,6 @@ rsaKeys = cripts.add_parser(
     help="Gerador de chaves RSA."
     )
 
-rsaKeys.add_argument(
-    "generateKeys",
-    help="Gerar randomicamente chaves necessarias para a criptografia",
-    action='store_true'
-    )
-
-
 # Criptografia RSA
 rsa = cripts.add_parser(
     "rsa", 
@@ -107,7 +100,7 @@ rsa.add_argument(
     type=int
     )
 
-# Custom OTP
+# Vigenere
 vigenere = cripts.add_parser(
     "vigenere", 
     help="Cifra de Vigenere com alfabeto padrao."
