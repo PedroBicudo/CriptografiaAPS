@@ -2,7 +2,7 @@
 from exceptions import SizeStringError
 
 
-def hexToChr(hex_msg, sep=':'):
+def hex_to_chr(hex_msg, sep=':'):
     """Realizar conversao da mensagem em hexadecimal para Caractere.
     
     Arguments:
@@ -69,5 +69,5 @@ def decrypt(hex_msg, key):
         str -- Mensagem descriptografada.
 
     """
-    hex_msg = hexToChr(hex_msg)
+    hex_msg = hex_to_chr(hex_msg)
     return ''.join(map(chr, action(hex_msg, key)))
