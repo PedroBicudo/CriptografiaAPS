@@ -1,5 +1,5 @@
 """Manipular parametros de linha de comando."""
-from argumentos import manipularArgumentos
+from argumentos import argument_manipulator
 import argparse
 
 # Criando root
@@ -8,6 +8,7 @@ criptmng = argparse.ArgumentParser(
 )
 
 requiredArgs = criptmng.add_argument_group("Parametros Obrigatorios")
+
 # Argumentos para entrada de texto
 # Apenas o texto ou arquivo serao selecionados.
 input_arg = requiredArgs.add_mutually_exclusive_group(required=True)
@@ -139,4 +140,4 @@ ascii_otp.add_argument(
 
 if __name__ == "__main__":
     args = criptmng.parse_args()
-    manipularArgumentos(**args.__dict__)
+    argument_manipulator(**args.__dict__)
