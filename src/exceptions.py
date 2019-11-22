@@ -5,7 +5,3 @@ class CriptException(BaseException):
 
 class SizeStringError(CriptException):
     """Erro de tamanho de string."""
-
-class CriptNotFoundError(CriptException):
-    """A criptografia nao e conhecida."""
-    
