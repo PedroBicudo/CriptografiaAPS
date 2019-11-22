@@ -4,7 +4,7 @@ from string import ascii_lowercase
 from operator import add, sub
 
 
-def getRotLetter(letter, rot, operation, alphabet):
+def get_rot_letter(letter, rot, operation, alphabet):
     """Obter a letra rotacionada.
 
     Arguments:
@@ -52,7 +52,7 @@ def caesar(msg, rot, operation, alphabet=ascii_lowercase):
         str -- Mensagem criptografada/descriptografada.
 
     """
-    message = map(lambda l: getRotLetter(l, rot, operation, alphabet), msg)
+    message = map(lambda l: get_rot_letter(l, rot, operation, alphabet), msg)
     return ''.join(message)
 
 
