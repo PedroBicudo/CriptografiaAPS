@@ -66,13 +66,13 @@ def chaves():
 
     return [[public_key1, public_key2], [public_key1, private_key3]]
 
-def encript(msg, public_key1, public_key2):
+def encript(msg, key1, key2):
     """Encriptar a mensagem com RSA.
 
     Arguments:
         msg {str} -- Mensagem a ser encriptada.
-        public_key1 {int} -- Chave publica 1.
-        public_key2 {int} -- Chave publica 2.
+        key1 {int} -- Chave publica 1.
+        key2 {int} -- Chave publica 2.
     
     Returns:
         str -- Hexadecimal representando a criptografia.
@@ -82,17 +82,17 @@ def encript(msg, public_key1, public_key2):
     l1 = list(map(ord, msg))
     cript = l1.copy()
     for c in range(0, len(l1)):
-        cript[c] = cript[c] ** public_key2 % public_key1
+        cript[c] = cript[c] ** key2 % key1
     return ':'.join(list(map(hex, cript)))
 
 
-def decript(hex_msg, public_key1, private_key3):
+def decript(hex_msg, key1, key2):
     """Desencriptar a mensagem.
 
     Arguments:
         hex_msg {str} -- Mensagem encriptada em Hexadecimal.
-        public_key1 {int} -- Chave publica 1
-        private_key3 {int} -- Chave privada 3
+        key1 {int} -- Chave privada 1
+        key2 {int} -- Chave privada 2
     
     Returns:
         str -- Mensagem desencriptada.
@@ -101,7 +101,7 @@ def decript(hex_msg, public_key1, private_key3):
     dec_msg = list(map(lambda x: int(x, base=16), hex_msg.split(':')))
     decript = dec_msg.copy()
     for c in range(0, len(dec_msg)):
-        decript[c] = decript[c] ** private_key3 % public_key1
+        decript[c] = decript[c] ** key2 % key1
     decript = list(map(chr, decript))
     return ''.join(decript)
 
