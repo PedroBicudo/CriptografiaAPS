@@ -3,7 +3,7 @@ from string import ascii_letters, punctuation
 from exceptions import SizeStringError
 from operator import add, sub
 
-characters = ascii_letters + punctuation + '’ '
+CHARACTERS = ascii_letters + punctuation + ' '
 
 
 def get_letter(lpos, kpos, operator, alphabet):
@@ -64,7 +64,7 @@ def get_word(msg, key, operator, alphabet):
     return result
 
 
-def encrypt(msg, key, alphabet=characters):
+def encrypt(msg, key, alphabet=CHARACTERS):
     """Encriptar a mensagem.
 
     Arguments:
@@ -79,7 +79,7 @@ def encrypt(msg, key, alphabet=characters):
     return get_word(msg, key, add, alphabet)
 
 
-def decrypt(msg, key, alphabet=characters):
+def decrypt(msg, key, alphabet=CHARACTERS):
     """Decriptar mensagem.
     
     Arguments:
