@@ -1,55 +1,50 @@
 """Direcionar os parametros argparse para as respectivas criptografias."""
-from string import ascii_letters as characaters
+from string import ascii_letters as characaters, hexdigits
 from random import choices
-from RSA import (
+from rsa import (
     encript as rsa_enc, 
-    decript as rsa_dec,
+    decript as rsa_dec, 
     chaves
 )
-from OneTimePad import (
-    encrypt as otp_enc, 
+from onetimepad import (
+    encrypt as otp_enc,
     decrypt as otp_dec
 )
-from VigenereCipher import (
-    encrypt as vig_enc,
+from vigenerecipher import (
+    encrypt as vig_enc, 
     decrypt as vig_dec
 )
-from Caesar import (
-    encript as caesar_enc,
+from caesar import (
+    encript as caesar_enc, 
     decript as caesar_dec
 )
 import sys
 import _io
 
-criptografias = {
-    "caesar": {
-        "action": {
-            True: caesar_enc,
-            False: caesar_dec
-        }
-    },
-    "rsa": {
-        "action": {
-            True: rsa_enc,
-            False: rsa_dec
-        }
-    },
-    "vigenere": {
-        "action": {
-            True: vig_enc,
-            False: vig_dec
-        }
-    },
-    "otp": {
-        "action": {
-            True: otp_enc,
-            False: otp_dec
-        }
-    }
-}
+
+def isHex(value):
+    """Verificar se o valor inserido e hexadecimal.
+    
+    Arguments:
+        value {str} -- Valor representando o suposto hexadecimal.   
+    
+    Raises:
+        ValueError: "Apenas um hexadecimal deve ser inserido."
+    
+    Returns:
+        bool -- Hexadecimal (True) / Nao hexadecimal (False)
+
+    """
+    if not isinstance(value, str):
+        raise TypeError("'value' deve ser uma string.")
+
+    if value.count('0x') > 1:
+        raise ValueError("Apenas um hexadecimal deve ser inserido.")
+
+    return set(value.split('0x')[-1]) <= set(hexdigits)
 
 
-def getRandomKey(msg):
+def get_random_key(msg):
     """Gerar chave aleatoria.
     
     Arguments:
@@ -59,104 +54,85 @@ def getRandomKey(msg):
         str -- Chave aleatoria de acordo com o tamanho da mensagem.
 
     """
-    if all('0x' in value for value in msg.split(':')):
+    if all(isHex(value) for value in msg.split(':')):
         msg = msg.split(':')
+
     return "".join(choices(characaters, k=len(msg)))
 
 
-def chaveExiste(kwargs): 
-    """Verificar se a chave e aleatoria.
-    
-    Arguments:
-        kwargs {dict} -- KeyWord Arguments
-    
-    Returns:
-        dict -- Kwargs
-
-    """
-    if kwargs.get('key'):
-        if kwargs.get('key') == "$RANDOM$":
-            kwargs['key'] = getRandomKey(kwargs['input'])
-            print(f"Chave: {kwargs['key']}")
-
-    return kwargs
-
-def output(msg, output: [None, _io.TextIOWrapper]):
+def output_format(msg, output):
     """Formato de saida da mensagem criptografada/descriptografada.
 
-    Description:
-        Se o tipo de saida for _io.TextIOWrapper ele escreve no
-        arquivo, caso contrario, simplesmente imprime na tela.
-    
     Arguments:
         msg {str} -- Mensagem.
         output {[None, _io.TextIOWrapper]} -- Tipo de saida.
+
     """
-    if output is not None:
+    if isinstance(output, _io.TextIOWrapper):
         output.write(msg)
         output.close()
-        sys.exit(0)
-    
-    print(f"Text: {msg}")
+
+    else:
+        print(f"Text: {msg}")
     
 
-def inputType(kwargs):
-    """Define o tipo de entrada.
-
-    Description:
-        Buscar ver qual o tipo de entrada, se for arquivo
-        sera adicionado o metodo '.read()' e retornado.
+def get_cript_action(cript, action):
+    """Escolher a criptografia e a acao a ser efetuada.
     
     Arguments:
-        kwargs {dict} -- KeyWord Arguments
+        cript {str} -- Nome da criptografia
+        action {bool} -- Encriptar/Desencriptar (True or False)
+    
+    Raises:
+        CriptNotFoundError: A criptografia ainda nao foi implementada.
     
     Returns:
-        dict -- KeyWord Arguments
+        function/None -- Funcao representando acao ou o valor None.
 
     """
-    if isinstance(kwargs['input'], _io.TextIOWrapper):
-        kwargs['input'] = kwargs['input'].read()
-    return kwargs
-
-
-def criptType(kwargs):
-    """Obter o tipo de criptografia.
+    if cript == "caesar":
+        result = caesar_enc if action else caesar_dec
     
-    Arguments:
-        kwargs {dict} -- KeyWord Arguments.
+    elif cript == "rsa":
+        result = rsa_enc if action else rsa_dec
     
-    Returns:
-        function -- Funcao representando a acao da criptografia.
-
-    """
-    cript = criptografias[kwargs['cript']]['action']
-    return cript[kwargs['action']]
-
-
-def manipularArgumentos(**kwargs):
-    """Manipular argumentos inseridos e direcionar para o usuario."""
-    # Tipo de entrada
-    inputType(kwargs)
-
-    chaveExiste(kwargs)
-    if kwargs.get('generateKeys', False):
+    elif cript == "vigenere":
+        result = vig_enc if action else vig_dec
+    
+    elif cript == "otp":
+        result = otp_enc if action else otp_dec
+    
+    elif cript == "rsaGK":
         keys = chaves()
-        print("Chaves publicas:", keys[0])
-        print("Chave privada:", keys[1])
+        print(f"Public Keys: {keys[0]}")
+        print(f"Private Keys: {keys[1]}")
         sys.exit(0)
+
+    else:
+        raise NotImplementedError(f"O projeto nao implementou '{cript}'.")
+
+    return result
+
+
+def argument_manipulator(input, output, action, cript, **kwargs):
+    """Manipular os argumentos inseridos via linha de comando.
     
-    # Acao a ser tomada
-    cript = criptType(kwargs)
-    kwargs.pop('action')
-    kwargs.pop('cript')
+    Arguments:
+        input {str|_oi.TextIOWrapper} -- Mensagem a ser criptografada.
+        output {NoneType|_oi.TextIOWrapper} -- Formato de saida.
+        action {bool} -- Encriptar/Desencriptar mensagem.
+        cript {str} -- Nome da criptografia.
+    """
+    input_msg = input.read() if isinstance(input, _io.TextIOWrapper) else input
+    cript_action = get_cript_action(cript, action)
 
-
-    # Tipo de saida
-    saida = None if not kwargs.get('output', False) else kwargs['output']
-    if kwargs.get('output'):
-        kwargs.pop('output')
+    if kwargs.get('key', False):
+       if kwargs.get('key') == "$RANDOM$":
+            kwargs['key'] = get_random_key(input)
+            print(f"Chave: {kwargs['key']}")
     
-    # Eliminando valores None
-    args = list(filter(lambda x: x != None, list(kwargs.values())))
+    # Removendo Valores None
+    kwargs = dict(filter(lambda kargs: kargs[-1], kwargs.items()))
 
-    output(cript(*args), saida)
+    # Escolhendo formato de saida
+    output_format(cript_action(input_msg, **kwargs), action)
