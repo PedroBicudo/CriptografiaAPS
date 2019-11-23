@@ -91,14 +91,14 @@ rsa = cripts.add_parser(
     )
 
 rsa.add_argument(
-    "publickey",
-    help="Chave publica 1",
+    "key1",
+    help="Chave publica 1 ou Chave privada 1",
     type=int
     )
 
 rsa.add_argument(
-    "key",
-    help='Chave privada para desencriptar e chave publica para encriptar.',
+    "key2",
+    help='Chave publica 2 ou Chave privada 2',
     type=int
     )
 
