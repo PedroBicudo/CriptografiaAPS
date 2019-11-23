@@ -24,15 +24,18 @@ def action(msg, key):
     """Realizar a operacao XOR, responsavel pela criptografia.
     
     Arguments:
-        msg {list} -- Mensagem a ser criptografada.
-        key {list} -- Chave de tamanho igual ou superior.
+        msg {list|str} -- Mensagem a ser criptografada.
+        key {list|str} -- Chave de tamanho igual ou superior.
     
     Returns:
         list -- Resultado ordenado da operacao.
 
     """
-    if not isinstance(msg, str) or not isinstance(key, str):
-        raise TypeError(f"'msg' e 'key' devem ser do tipo string.")
+    if not isinstance(msg, str) and not isinstance(msg, list):
+        raise TypeError(f"'msg' devem ser do tipo string ou list.")
+
+    if not isinstance(key, str) and not isinstance(key, list):
+        raise TypeError(f"key' devem ser do tipo string ou list.")
     
     if len(key) < len(msg):
         raise SizeStringError("'key' deve ter tamanho maior ou igual a 'msg'.")
