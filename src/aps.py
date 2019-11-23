@@ -3,15 +3,16 @@ from argumentos import argument_manipulator
 import argparse
 
 # Criando root
-criptmng = argparse.ArgumentParser(
+cript_manager = argparse.ArgumentParser(
     description="Criptografias desenvolvidas pelo grupo da APS.",
 )
 
-requiredArgs = criptmng.add_argument_group("Parametros Obrigatorios")
+
+required_args = cript_manager.add_argument_group("Parametros Obrigatorios")
 
 # Argumentos para entrada de texto
 # Apenas o texto ou arquivo serao selecionados.
-input_arg = requiredArgs.add_mutually_exclusive_group(required=True)
+input_arg = required_args.add_mutually_exclusive_group(required=True)
 input_arg.add_argument(
     "-txt",
     help="Texto a ser criptografado/descriptografado.",
@@ -25,7 +26,7 @@ input_arg.add_argument(
     dest="input"
 )
 
-criptmng.add_argument(
+cript_manager.add_argument(
     "-oF",
     help="Arquivo de saida.",
     type=argparse.FileType('w', encoding="utf-8"),
@@ -34,7 +35,7 @@ criptmng.add_argument(
 
 
 # Acoes para a criptografia
-action_crip = requiredArgs.add_mutually_exclusive_group(required=True)
+action_crip = required_args.add_mutually_exclusive_group(required=True)
 action_crip.add_argument(
     "--encript", "-e",
     help="Encriptar a mensagem.",
@@ -53,7 +54,7 @@ action_crip.add_argument(
 # # 
 # # CRIPTOGRAFIAS
 # # 
-cripts = criptmng.add_subparsers(
+cripts = cript_manager.add_subparsers(
     dest='cript', 
     title="Criptografias da APS",
     required=True)
@@ -78,7 +79,7 @@ caesar.add_argument(
 
 
 # Gerador de chaves RSA
-rsaKeys = cripts.add_parser(
+rsa_keys = cripts.add_parser(
     "rsaGK",
     help="Gerador de chaves RSA."
     )
@@ -122,13 +123,13 @@ vigenere.add_argument(
     type=str
     )
 
-# ASCII OTP
-ascii_otp = cripts.add_parser(
+# OTP
+otp = cripts.add_parser(
     "otp", 
     help="Criptografia One Time Pad."
     )
 
-ascii_otp.add_argument(
+otp.add_argument(
     "key",
     help="""
         Chave para criptografar/descriptografar 
@@ -139,5 +140,5 @@ ascii_otp.add_argument(
 
 
 if __name__ == "__main__":
-    args = criptmng.parse_args()
+    args = cript_manager.parse_args()
     argument_manipulator(**args.__dict__)
