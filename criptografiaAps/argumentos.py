@@ -1,4 +1,5 @@
 """Direcionar os parametros argparse para as respectivas criptografias."""
+import _io
 
 def _output_format(msg, output):
     """Formato de saida da mensagem criptografada/descriptografada.
@@ -18,3 +19,4 @@ def _output_format(msg, output):
 
     else:
         print(f"Text: {msg}")
+
