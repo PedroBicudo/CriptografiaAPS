@@ -1,7 +1,7 @@
 """Direcionar os parametros argparse para as respectivas criptografias."""
 import _io
 
-__all__ = []
+__all__ = ["argument_manipulator"]
 
 def _output_format(msg, output):
     """Formato de saida da mensagem criptografada/descriptografada.
@@ -50,4 +50,28 @@ def _get_cript_action(cript, action):
     """
     raise NotImplementedError
 
+def argument_manipulator(inpt, output, action, cript, **kwargs):
+    """Manipular os argumentos inseridos via linha de comando.
 
+    Parameters
+    ----------
+    inpt : [str|_oi.TextIOWrapper]
+        Mensagem a ser criptografada.
+
+    output: [NoneType|_oi.TextIOWrapper]
+        Formato de saida.
+
+    action: bool
+        Encriptar/Desencriptar mensagem.
+
+    cript: str
+        Nome da criptografia.
+
+    """
+    input_msg = inpt.read() if isinstance(inpt, _io.TextIOWrapper) else inpt
+    cript_action = _get_cript_action(cript, action)
+
+    # Removendo Valores None
+    kwargs = dict(filter(lambda kargs: kargs[-1], kwargs.items()))
+    
+    _output_format(cript_action(input_msg, **kwargs), action)
