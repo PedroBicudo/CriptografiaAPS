@@ -13,13 +13,13 @@ input_arg.add_argument(
     "-txt",
     help="Texto a ser criptografado/descriptografado.",
     type=str,
-    dest="input"
+    dest="inpt"
 )
 input_arg.add_argument(
     "-iF",
     help="Arquivo a ser criptografado/descriptografado.",
     type=argparse.FileType('r', encoding='utf-8'),
-    dest="input"
+    dest="inpt"
 )
 
 cript_manager.add_argument(
