@@ -44,3 +44,11 @@ action_crip.add_argument(
     action="store_false",
     dest='action'
     )
+
+# #
+# # CRIPTOGRAFIAS
+# #
+cripts = cript_manager.add_subparsers(
+    dest='cript',
+    title="Criptografias da APS",
+    required=True)
