@@ -39,12 +39,12 @@ class Caesar(AbstractCriptModel):
         
         return letter_new
     
-    def _caesar(self, text, rot, operation, alphabet=ascii_lowercase):
+    def _caesar(self, text, rot, operation, alphabet):
         """Criptografar/descriptografar a cifra.
 
         Parameters
         ----------
-        msg: str
+        text: str
             Mensagem.
 
         rot: int
@@ -68,8 +68,44 @@ class Caesar(AbstractCriptModel):
         ]
         return ''.join(text_new)
     
-    def encript(self, text, rot, custom_alphabet):
-        ...
+    def encript(self, msg, rot, custom_alphabet=ascii_lowercase):
+        """Encriptar a mensagem.
 
-    def decript(self, enc_text, rot, custom_alphabet):
-        ...
+        Parameters
+        ----------
+        msg: str
+            Mensagem.
+        
+        rot: int
+            Valor de rotação.
+        
+        custom_alphabet: str
+            Alfabeto customizado {default: ascii_lowercase}
+        
+        Returns
+        ---------
+        str
+            Mensagem criptografada.
+        """
+        return self._caesar(msg, rot, lambda x, y: x+y, custom_alphabet)
+
+    def decript(self, msg, rot, custom_alphabet=ascii_lowercase):
+        """Desencriptar mensagem.
+        
+        Parameters
+        ----------
+        msg: str
+            Mensagem.
+        
+        rot: int
+            Valor de rotação.
+        
+        custom_alphabet: str
+            Alfabeto customizado {default: ascii_lowercase}
+
+        Returns
+        ---------
+        str
+            Mensagem criptografada.        
+        """
+        return self._caesar(msg, rot, lambda x, y: x-y, custom_alphabet)
