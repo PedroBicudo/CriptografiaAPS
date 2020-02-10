@@ -1,0 +1,1 @@
+from criptografiaAps.AbstractCriptModel import AbstractCriptModel
