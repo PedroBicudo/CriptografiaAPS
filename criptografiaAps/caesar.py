@@ -1,5 +1,6 @@
 """Criptografia Cifra de César."""
 from criptografiaAps.AbstractCriptModel import AbstractCriptModel
+from string import ascii_lowercase
 
 class Caesar(AbstractCriptModel):
 
@@ -37,6 +38,30 @@ class Caesar(AbstractCriptModel):
             letter_new = alphabet[operation(letter_pos, rot) % len(alphabet)]
         
         return letter_new
+    
+    def _caesar(self, msg, rot, operation, alphabet=ascii_lowercase):
+        """Criptografar/descriptografar a cifra.
+
+        Parameters
+        ----------
+        msg: str
+            Mensagem.
+
+        rot: int
+            Valor de rotacao da cifra.
+
+        operation: function
+            Tipo de operacao.
+
+        alphabet: str
+            Alfabeto a ser usado.
+
+        Returns
+        ----------
+        str
+            Mensagem criptografada/descriptografada.
+
+        """
     
     def encript(self, text, rot):
         ...
