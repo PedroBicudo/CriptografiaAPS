@@ -1,10 +1,9 @@
 """Criptografia Cifra de César."""
 from criptografiaAps.AbstractCriptModel import AbstractCriptModel
 
-
 class Caesar(AbstractCriptModel):
 
-    def _get_rot_letter(self, letter, rot, operation, alphabet)
+    def _get_rot_letter(self, letter, rot, operation, alphabet):
         """Obter a letra rotacionada.
 
         Parameters
@@ -31,13 +30,13 @@ class Caesar(AbstractCriptModel):
             raise ValueError("'letter' deve ter length 1.")
 
         if letter not in alphabet:
-            result = letter
+            letter_new = letter
 
         else:
-            pos_letter = alphabet.index(letter)
-            result = alphabet[operation(pos_letter, rot) % len(alphabet)]
+            letter_pos = alphabet.index(letter)
+            letter_new = alphabet[operation(letter_pos, rot) % len(alphabet)]
         
-        return result
+        return letter_new
     
     def encript(self, text, rot):
         ...
