@@ -1,5 +1,5 @@
 """Criptografia Cifra de César."""
-from AbstractCriptModel import AbstractCriptModel
+from criptografiaAps import AbstractCriptModel
 from string import ascii_lowercase
 
 class Caesar(AbstractCriptModel):
