@@ -1,4 +1,5 @@
 """Manipular parametros de linha de comando."""
+from criptografiaAps import argument_manipulator
 import argparse
 
 cript_manager = argparse.ArgumentParser(
