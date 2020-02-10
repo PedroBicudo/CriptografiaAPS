@@ -68,8 +68,8 @@ class Caesar(AbstractCriptModel):
         ]
         return ''.join(text_new)
     
-    def encript(self, text, rot):
+    def encript(self, text, rot, custom_alphabet):
         ...
 
-    def decript(self, enc_text, rot):
+    def decript(self, enc_text, rot, custom_alphabet):
         ...
