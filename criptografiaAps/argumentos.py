@@ -50,7 +50,7 @@ def _get_cript_action(cript, action):
 
     """
     if cript == "caesar":
-        cript_option = Caesar
+        cript_option = Caesar()
     else:
         raise NotImplementedError
     
