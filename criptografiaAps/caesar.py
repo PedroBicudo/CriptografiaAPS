@@ -26,7 +26,7 @@ class Caesar(AbstractCriptModel):
             Letra cifrada.
 
         """
-        if len(letter) > 1 or not letter:
+        if len(letter) != 1:
             raise ValueError("'letter' deve ter length 1.")
 
         if letter not in alphabet:
