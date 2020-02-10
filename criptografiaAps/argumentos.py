@@ -79,5 +79,5 @@ def argument_manipulator(inpt, output, action, cript, **kwargs):
 
     # Removendo Valores None
     kwargs = dict(filter(lambda kargs: kargs[-1], kwargs.items()))
-
-    _output_format(cript_action(text, **kwargs), action)
+    
+    _output_format(cript_action(text, **kwargs), output)
