@@ -53,3 +53,25 @@ cripts = cript_manager.add_subparsers(
     dest='cript',
     title="Criptografias da APS",
     required=True)
+
+# César
+caesar = cripts.add_parser(
+    "caesar",
+    help="Cifra de cesar."
+    )
+
+caesar.add_argument(
+    "rot",
+    help="Rotacao para o alfabeto.",
+    type=int
+    )
+
+caesar.add_argument(
+    "-alphabet",
+    help="Alfabeto customizado.",
+    type=str
+    )
+
+if __name__ == "__main__":
+    args = cript_manager.parse_args()
+    argument_manipulator(**args.__dict__)
