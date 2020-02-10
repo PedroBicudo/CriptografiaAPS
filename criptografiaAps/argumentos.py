@@ -49,7 +49,12 @@ def _get_cript_action(cript, action):
         descriptografia e geracao de chaves para a criptografia RSA.
 
     """
-    raise NotImplementedError
+    if cript == "caesar":
+        cript_option = Caesar
+    else:
+        raise NotImplementedError
+    
+    return cript_option.get_action(action)
 
 def argument_manipulator(inpt, output, action, cript, **kwargs):
     """Manipular os argumentos inseridos via linha de comando.
