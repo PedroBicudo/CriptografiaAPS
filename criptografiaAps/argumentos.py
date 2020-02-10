@@ -68,10 +68,10 @@ def argument_manipulator(inpt, output, action, cript, **kwargs):
         Nome da criptografia.
 
     """
-    input_msg = inpt.read() if isinstance(inpt, _io.TextIOWrapper) else inpt
+    text = inpt.read() if isinstance(inpt, _io.TextIOWrapper) else inpt
     cript_action = _get_cript_action(cript, action)
 
     # Removendo Valores None
     kwargs = dict(filter(lambda kargs: kargs[-1], kwargs.items()))
-    
-    _output_format(cript_action(input_msg, **kwargs), action)
+
+    _output_format(cript_action(text, **kwargs), action)
