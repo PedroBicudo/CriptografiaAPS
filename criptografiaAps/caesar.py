@@ -27,7 +27,17 @@ class Caesar(AbstractCriptModel):
             Letra cifrada.
 
         """
+        if len(letter) > 1 or not letter:
+            raise ValueError("'letter' deve ter length 1.")
 
+        if letter not in alphabet:
+            result = letter
+
+        else:
+            pos_letter = alphabet.index(letter)
+            result = alphabet[operation(pos_letter, rot) % len(alphabet)]
+        
+        return result
     
     def encript(self, text, rot):
         ...
