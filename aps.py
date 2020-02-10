@@ -69,7 +69,8 @@ caesar.add_argument(
 caesar.add_argument(
     "-alphabet",
     help="Alfabeto customizado.",
-    type=str
+    type=str,
+    dest='custom_alphabet'
     )
 
 if __name__ == "__main__":
