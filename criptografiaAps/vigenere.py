@@ -49,12 +49,12 @@ class Vigenere(AbstractCriptModel):
         str
             Texto encriptado/decriptado.
         """
-        new_msg = ""
+        msg_new = ""
         for index, letter in enumerate(msg):
             letter_pos = alphabet.index(letter)
             key_pos = alphabet.index(key[index])
-            new_msg += self._get_letter(
+            msg_new += self._get_letter(
                 letter_pos, key_pos,
                 operator, alphabet
                 )
-        return new_msg
+        return msg_new
