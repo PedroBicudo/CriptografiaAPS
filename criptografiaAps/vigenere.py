@@ -1,4 +1,10 @@
+"""Cifra de Vigenere."""
 from criptografiaAps import AbstractCriptModel
+from string import ascii_letters
+from operator import add, sub
+
+CHARACTERS = ascii_letters + ''.join(map(str, range(10)))
+
 
 class Vigenere(AbstractCriptModel):
     
@@ -58,3 +64,55 @@ class Vigenere(AbstractCriptModel):
                 operator, alphabet
                 )
         return msg_new
+    
+    def encript(self, msg, key, alphabet=CHARACTERS):
+        """Encriptar a mensagem.
+
+        Parameters
+        ----------
+        msg: str
+            Texto a ser encriptado.
+
+        key: str
+            Chave para encriptacao.
+
+        alphabet: str
+            Alfabeto a ser usado.
+
+        Returns
+        ----------
+        str
+            Texto encriptado.
+
+        """
+        return self._get_word(
+            msg, 
+            key, 
+            add,
+            alphabet
+        )
+
+
+    def decript(self, msg, key, alphabet=CHARACTERS):
+        """Decriptar mensagem.
+    
+        Parameters
+        ----------
+        msg: str
+            Texto encriptado.
+    
+        key: str
+            Chave para decriptacao.
+    
+        Returns
+        ----------
+        str
+            Texto decriptado.
+    
+        """
+        return self._get_word(
+            msg, 
+            key, 
+            sub, 
+            alphabet
+        )
