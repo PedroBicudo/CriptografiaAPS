@@ -73,6 +73,28 @@ caesar.add_argument(
     dest='custom_alphabet'
     )
 
+# Vigenere
+vigenere = cripts.add_parser(
+    "vigenere",
+    help="Cifra de Vigenere com alfabeto padrao."
+    )
+
+vigenere.add_argument(
+    "key",
+    help=(
+        "Chave para criptografar/descriptografar"
+        "[digite $RANDOM$ para chaves aleatorias]."
+    ),
+    type=str
+    )
+
+vigenere.add_argument(
+    "-alphabet",
+    help="Alfabeto customizado.",
+    type=str
+    )
+
+
 if __name__ == "__main__":
     args = cript_manager.parse_args()
     argument_manipulator(**args.__dict__)
