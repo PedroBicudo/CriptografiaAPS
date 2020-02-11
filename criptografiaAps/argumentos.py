@@ -1,5 +1,6 @@
 """Direcionar os parametros argparse para as respectivas criptografias."""
 from criptografiaAps import Caesar
+from criptografiaAps import Vigenere
 import _io
 
 __all__ = ["argument_manipulator"]
@@ -51,6 +52,8 @@ def _get_cript_action(cript, action):
     """
     if cript == "caesar":
         cript_option = Caesar()
+    elif cript == "vigenere":
+        cript_option = Vigenere()
     else:
         raise NotImplementedError
     
