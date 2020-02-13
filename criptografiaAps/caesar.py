@@ -3,6 +3,15 @@ from criptografiaAps import AbstractCriptModel
 from string import ascii_lowercase
 
 class Caesar(AbstractCriptModel):
+    """Cifra de César.
+
+    >>> caesar = Caesar()
+    >>> caesar.encript("hello", 1)
+    'ifmmp'
+    >>> caesar.decript("ifmmp", 1)
+    'hello'
+
+    """
 
     def _get_rot_letter(self, letter, rot, operation, alphabet):
         """Obter a letra rotacionada.
