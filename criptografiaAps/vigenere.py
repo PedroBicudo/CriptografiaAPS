@@ -1,5 +1,5 @@
 """Cifra de Vigenere."""
-from AbstractCriptModel import AbstractCriptModel
+from criptografiaAps import AbstractCriptModel
 from string import ascii_letters
 from operator import add, sub
 
@@ -16,8 +16,7 @@ class Vigenere(AbstractCriptModel):
     'hello'
 
     """
-    
-    
+        
     def _get_letter(self, letter_pos, key_pos, operator, alphabet):
         """Obter a nova letra apos a encriptacao/desencriptacao.
 
