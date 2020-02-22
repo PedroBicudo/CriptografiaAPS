@@ -1,7 +1,8 @@
 """Direcionar os parametros argparse para as respectivas criptografias."""
 from criptografiaAps import (
     Caesar,
-    Vigenere
+    Vigenere,
+    Vernam
 )
 import _io
 
@@ -54,8 +55,13 @@ def _get_cript_action(cript, action):
     """
     if cript == "caesar":
         cript_option = Caesar()
+
     elif cript == "vigenere":
         cript_option = Vigenere()
+
+    elif cript == "vernam":
+        cript_option = Vernam()
+
     else:
         raise NotImplementedError
     
