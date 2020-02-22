@@ -94,6 +94,20 @@ vigenere.add_argument(
     type=str
     )
 
+# Vernam
+vernam = cripts.add_parser(
+    "vernam",
+    help="Cifra de Vernam."
+    )
+
+vernam.add_argument(
+    "key",
+    help=(
+        "Chave para criptografar/descriptografar"
+        "[digite $RANDOM$ para chaves aleatorias]."
+    ),
+    type=str
+    )
 
 if __name__ == "__main__":
     args = cript_manager.parse_args()
