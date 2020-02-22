@@ -3,7 +3,15 @@ from criptografiaAps import AbstractCriptModel
 from string import hexdigits
 
 class Vernam(AbstractCriptModel):
+    """Cifra de Vernam.
 
+    >>> vernam = Vernam()    
+    >>> vernam.encript('teste', 'abcde')
+    '0x15:0x7:0x10:0x10:0x0'
+    >>> vernam.decript('0x15:0x7:0x10:0x10:0x0', 'abcde')
+    'teste'
+
+    """
 
     def _is_hex(self, value):
         """Verifica se é um hexadecimal.
