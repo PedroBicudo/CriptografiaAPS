@@ -63,6 +63,14 @@ class Vernam(AbstractCriptModel):
 
         key: [list|str]
             Chave de tamanho igual ou superior.
+        
+        Raises
+        ---------
+        TypeError
+            msg ou key devem ser str ou list.
+        
+        ValueError
+            key deve ter tamanho maior ou igual a msg.
 
         Returns
         ----------
