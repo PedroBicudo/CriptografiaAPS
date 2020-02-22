@@ -75,3 +75,42 @@ class Vernam(AbstractCriptModel):
         for index, letter in enumerate(msg):
             msg_new.append(ord(letter) ^ ord(key[index]))
         return msg_new
+
+    def encript(self, msg, key):
+        """Encriptar a mensagem usando a cifra de Vernam.
+
+        Parameters
+        ----------
+        msg: str
+            Mensagem a ser criptografada.
+
+        key: str
+            Chave de encriptacao.
+
+        Returns
+        ----------
+        str
+            String com formato hexadecimal (ex: '0xAA:0xBB')
+
+        """
+        msg_enc = self._vernam(msg, key)
+        return ':'.join(map(hex, msg_enc))
+
+
+    def decript(self, msg_hex, key):
+        """Desencriptar a mensagem usando a cifra de Vernam.
+
+        Parameters
+        ----------
+        msg_hex: str
+            Mensagem em formato hexadecimal.
+
+        key: str
+            Chave de desencriptacao.
+
+        Returns:
+            str -- Mensagem descriptografada.
+
+        """
+        msg_int = self._hex_to_chr(msg_hex)
+        return ''.join(map(chr, self._vernam(msg_int, key)))
