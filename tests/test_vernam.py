@@ -24,7 +24,7 @@ class VernamTest(unittest.TestCase):
             self.vernam._is_hex('ZZ')
         )
 
-        # Raises
+        # Raises ValueError
         with self.assertRaises(ValueError) as error:
             self.vernam._is_hex('0x440xAA')
         
@@ -32,3 +32,9 @@ class VernamTest(unittest.TestCase):
             'Apenas um hexadecimal deve ser inserido.'
             in str(error.exception)
             )
+
+    def test_hex_to_char(self):
+        self.assertEqual(
+            self.vernam._hex_to_chr('0x74:0x65:0x73:0x74:0x65'),
+            'teste'
+        )
