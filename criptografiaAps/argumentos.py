@@ -1,6 +1,8 @@
 """Direcionar os parametros argparse para as respectivas criptografias."""
-from criptografiaAps import Caesar
-from criptografiaAps import Vigenere
+from criptografiaAps import (
+    Caesar,
+    Vigenere
+)
 import _io
 
 __all__ = ["argument_manipulator"]
