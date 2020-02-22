@@ -79,10 +79,10 @@ class Vernam(AbstractCriptModel):
 
         """
         if not isinstance(msg, (str, list)):
-            raise TypeError(f"'msg' devem ser do tipo string ou list.")
+            raise TypeError("'msg' devem ser do tipo string ou list.")
 
         if not isinstance(key, (str, list)):
-            raise TypeError(f"key' devem ser do tipo string ou list.")
+            raise TypeError("key' devem ser do tipo string ou list.")
 
         if len(key) < len(msg):
             raise ValueError("'key' deve ter tamanho maior ou igual a 'msg'.")
