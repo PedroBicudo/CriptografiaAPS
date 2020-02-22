@@ -44,3 +44,34 @@ class Vernam(AbstractCriptModel):
         """
         msg_dec = [int(value_hex, base=16) for value_hex in msg_hex.split(sep)]
         return [chr(value_dec) for value_dec in msg_dec]
+
+    def _vernam(self, msg, key):
+        """Realizar a operacao XOR, responsavel pela criptografia.
+
+        Parameters
+        ----------
+        msg: [list|str]
+            Mensagem a ser criptografada.
+
+        key: [list|str]
+            Chave de tamanho igual ou superior.
+
+        Returns
+        ----------
+        list
+            Valores numéricos inteiros referentes a mensagem criptografada.
+
+        """
+        if not isinstance(msg, (str, list)):
+            raise TypeError(f"'msg' devem ser do tipo string ou list.")
+
+        if not isinstance(key, (str, list)):
+            raise TypeError(f"key' devem ser do tipo string ou list.")
+
+        if len(key) < len(msg):
+            raise ValueError("'key' deve ter tamanho maior ou igual a 'msg'.")
+
+        msg_new = []
+        for index, letter in enumerate(msg):
+            msg_new.append(ord(letter) ^ ord(key[index]))
+        return msg_new
